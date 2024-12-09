@@ -37,11 +37,13 @@ const MealDetails: React.FC<MealDetailsProps> = ({ mealId }) => {
   return (
     <div className='bg-white shadow-md rounded-lg p-6 mb-8'>
       <div className='flex justify-between items-start mb-4'>
-        <h2 className='text-2xl font-bold'>{meal.strMeal}</h2>
+        <h2 className='text-2xl font-bold dark:text-black'>{meal.strMeal}</h2>
         <button
           onClick={toggleFavorite}
           className={`px-4 py-2 rounded ${
-            isFavorite ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-800'
+            isFavorite
+              ? 'bg-red-500 text-white'
+              : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
           }`}
         >
           {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
@@ -53,11 +55,13 @@ const MealDetails: React.FC<MealDetailsProps> = ({ mealId }) => {
         className='w-full h-64 object-cover rounded-lg mb-4'
       />
       <p className='mb-4'>
-        <span className='font-semibold'>Category:</span> {meal.strCategory} |{' '}
+        <span className='font-semibold '>Category:</span> {meal.strCategory} |{' '}
         <span className='font-semibold'>Area:</span> {meal.strArea}
       </p>
-      <h3 className='text-xl font-semibold mb-2'>Ingredients:</h3>
-      <ul className='list-disc list-inside mb-4'>
+      <h3 className='text-xl font-semibold mb-2 dark:text-black'>
+        Ingredients:
+      </h3>
+      <ul className='list-disc list-inside mb-4 dark:text-black'>
         {ingredients.map(
           (
             { ingredient, measure } // here we are using same ingridient as id, because it is more performant than using integraded id from map, and ingredients will never be duplicated
@@ -68,8 +72,10 @@ const MealDetails: React.FC<MealDetailsProps> = ({ mealId }) => {
           )
         )}
       </ul>
-      <h3 className='text-xl font-semibold mb-2'>Instructions:</h3>
-      <p className='mb-4'>{meal.strInstructions}</p>
+      <h3 className='text-xl font-semibold mb-2 dark:text-black'>
+        Instructions:
+      </h3>
+      <p className='mb-4 dark:text-black'>{meal.strInstructions}</p>
       {meal.strYoutube && (
         <div>
           <h3 className='text-xl font-semibold mb-2'>Video Tutorial:</h3>

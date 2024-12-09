@@ -1,5 +1,4 @@
 import React from 'react';
-/* import { useOperator } from '../store/operator'; */
 import { useStoreView } from '../store/storeView';
 
 interface SearchBarProps {
@@ -15,7 +14,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
   searchType,
   setSearchType,
 }) => {
-  /*   const operator = useOperator(); */
   const { useRandomMeal } = useStoreView();
   const { data: randomMeal, refetch: fetchRandomMeal } = useRandomMeal();
 
@@ -29,31 +27,31 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <div className='mb-8'>
-      <div className='flex items-center gap-4 mb-4'>
+      <div className='flex flex-col sm:flex-row sm:items-center gap-4 mb-4 w-full'>
         <input
           type='text'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder={`Search by ${searchType}`}
-          className='flex-grow p-2 border rounded'
+          className='flex-grow p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white'
         />
         <select
           value={searchType}
           onChange={handleSearchTypeChange}
-          className='p-2 border rounded'
+          className='p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white'
         >
           <option value='name'>Name</option>
           <option value='ingredient'>Ingredient</option>
         </select>
         <button
           onClick={handleRandomMeal}
-          className='p-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+          className='p-2 bg-blue-500 text-white rounded hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
         >
           Surprise Me!
         </button>
       </div>
       {randomMeal && (
-        <div className='bg-gray-100 p-4 rounded'>
+        <div className='bg-gray-100 dark:bg-gray-700 p-4 rounded'>
           <h3 className='text-xl font-bold mb-2'>
             Random Meal: {randomMeal.strMeal}
           </h3>

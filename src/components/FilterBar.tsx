@@ -16,7 +16,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ setCategory, setArea }) => {
     <div className='flex gap-4 mb-4'>
       <select
         onChange={(e) => setCategory(e.target.value)}
-        className='p-2 border rounded'
+        className='p-2 border rounded dark:border-gray-600 dark:text-black'
       >
         <option value=''>All Categories</option>
         {categories?.map((category) => (
@@ -27,7 +27,7 @@ const FilterBar: React.FC<FilterBarProps> = ({ setCategory, setArea }) => {
       </select>
       <select
         onChange={(e) => setArea(e.target.value)}
-        className='p-2 border rounded'
+        className='p-2 border rounded dark:border-gray-600 dark:text-black'
       >
         <option value=''>All Areas</option>
         {areas?.map((area) => (

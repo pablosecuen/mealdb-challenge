@@ -72,3 +72,19 @@ export interface IngredientItem {
   ingredient: string;
   measure: string;
 }
+
+export interface AppState {
+  searchTerm: string;
+  searchType: 'name' | 'ingredient';
+  selectedMealId: string | null;
+  category: string;
+  area: string;
+}
+
+export type Action =
+  | { type: 'SET_SEARCH_TERM'; payload: string }
+  | { type: 'SET_SEARCH_TYPE'; payload: 'name' | 'ingredient' }
+  | { type: 'SET_SELECTED_MEAL_ID'; payload: string | null }
+  | { type: 'SET_CATEGORY'; payload: string }
+  | { type: 'SET_AREA'; payload: string }
+  | { type: 'RESET_STATE' };

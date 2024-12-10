@@ -2,6 +2,8 @@ import React from 'react';
 import { useStoreView } from '../store/storeView';
 import { useOperator } from '../store/operator';
 import { IngredientItem, Meal } from '../types/types';
+import { ADD_FAVORITE, REMOVE_FAVORITE } from '../constants/constants';
+import StatusMessage from './StatusMessage';
 
 interface MealDetailsProps {
   mealId: string;
@@ -12,10 +14,6 @@ const MealDetails: React.FC<MealDetailsProps> = ({ mealId }) => {
   const { data: meal, isLoading, isError } = useMealDetails(mealId);
   const { data: favorites } = useFavorites();
   const operator = useOperator();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Error fetching meal details</div>;
-  if (!meal) return <div>No meal found</div>;
 
   const isFavorite = favorites.some((fav: Meal) => fav.idMeal === meal.idMeal);
 
@@ -36,6 +34,7 @@ const MealDetails: React.FC<MealDetailsProps> = ({ mealId }) => {
 
   return (
     <div className='bg-white shadow-md rounded-lg p-6 mb-8'>
+      <StatusMessage isLoading={isLoading} isError={isError} hasData={!!meal} />
       <div className='flex justify-between items-start mb-4'>
         <h2 className='text-2xl font-bold dark:text-black'>{meal.strMeal}</h2>
         <button
@@ -46,7 +45,7 @@ const MealDetails: React.FC<MealDetailsProps> = ({ mealId }) => {
               : 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
           }`}
         >
-          {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+          {isFavorite ? REMOVE_FAVORITE : ADD_FAVORITE}
         </button>
       </div>
       <img

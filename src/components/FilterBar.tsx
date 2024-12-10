@@ -1,40 +1,46 @@
+// src/components/FilterBar.tsx
+
 import React from 'react';
-import { useStoreView } from '../store/storeView';
-import { Area, Category } from '../types/types';
+import { Action } from '../types/types';
 
 interface FilterBarProps {
-  setCategory: (category: string) => void;
-  setArea: (area: string) => void;
+  category: string;
+  area: string;
+  dispatch: React.Dispatch<Action>;
 }
 
-const FilterBar: React.FC<FilterBarProps> = ({ setCategory, setArea }) => {
-  const { useCategories, useAreas } = useStoreView();
-  const { data: categories } = useCategories() as { data?: Category[] };
-  const { data: areas } = useAreas() as { data?: Area[] };
+const FilterBar: React.FC<FilterBarProps> = ({ category, area, dispatch }) => {
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: 'SET_CATEGORY', payload: e.target.value });
+  };
+
+  const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: 'SET_AREA', payload: e.target.value });
+  };
 
   return (
-    <div className='flex gap-4 mb-4'>
+    <div className='mb-4 flex gap-4'>
       <select
-        onChange={(e) => setCategory(e.target.value)}
-        className='p-2 border rounded dark:border-gray-600 dark:text-black'
+        value={category}
+        onChange={handleCategoryChange}
+        className='p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white'
       >
         <option value=''>All Categories</option>
-        {categories?.map((category) => (
-          <option key={category.strCategory} value={category.strCategory}>
-            {category.strCategory}
-          </option>
-        ))}
+        <option value='Beef'>Beef</option>
+        <option value='Chicken'>Chicken</option>
+        <option value='Dessert'>Dessert</option>
+        <option value='Vegetarian'>Vegetarian</option>
       </select>
       <select
-        onChange={(e) => setArea(e.target.value)}
-        className='p-2 border rounded dark:border-gray-600 dark:text-black'
+        value={area}
+        onChange={handleAreaChange}
+        className='p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white'
       >
         <option value=''>All Areas</option>
-        {areas?.map((area) => (
-          <option key={area.strArea} value={area.strArea}>
-            {area.strArea}
-          </option>
-        ))}
+        <option value='American'>American</option>
+        <option value='British'>British</option>
+        <option value='Canadian'>Canadian</option>
+        <option value='Chinese'>Chinese</option>
       </select>
     </div>
   );

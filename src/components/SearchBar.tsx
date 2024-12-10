@@ -1,28 +1,49 @@
-import React from 'react';
 import { useStoreView } from '../store/storeView';
+import { Action } from '../types/types';
+import { SET_SEARCH_TERM, SET_SEARCH_TYPE } from '../constants/constants';
 
 interface SearchBarProps {
   searchTerm: string;
-  setSearchTerm: (term: string) => void;
   searchType: 'name' | 'ingredient';
-  setSearchType: (type: 'name' | 'ingredient') => void;
+  dispatch: React.Dispatch<Action>;
 }
 
+/**
+ * SearchBar component allows users to search for meals by name or ingredient
+ * and fetch a random meal.
+ *
+ * @param {SearchBarProps} props - Props containing search term, search type, and dispatch function.
+ * @returns {JSX.Element} The rendered SearchBar component.
+ */
 const SearchBar: React.FC<SearchBarProps> = ({
   searchTerm,
-  setSearchTerm,
   searchType,
-  setSearchType,
-}) => {
+  dispatch,
+}: SearchBarProps): JSX.Element => {
   const { useRandomMeal } = useStoreView();
   const { data: randomMeal, refetch: fetchRandomMeal } = useRandomMeal();
 
+  /**
+   * Handles the change in search type (name or ingredient).
+   *
+   * @param {React.ChangeEvent<HTMLSelectElement>} e - Change event from the select input.
+   */
   const handleSearchTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSearchType(e.target.value as 'name' | 'ingredient');
+    dispatch({
+      type: SET_SEARCH_TYPE,
+      payload: e.target.value as 'name' | 'ingredient',
+    });
   };
 
   const handleRandomMeal = () => {
     fetchRandomMeal();
+  };
+
+  const handleSearchTermChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: SET_SEARCH_TERM,
+      payload: e.target.value,
+    });
   };
 
   return (
@@ -31,7 +52,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <input
           type='text'
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={handleSearchTermChange}
           placeholder={`Search by ${searchType}`}
           className='flex-grow p-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-white'
         />
@@ -46,6 +67,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <button
           onClick={handleRandomMeal}
           className='p-2 bg-blue-500 text-white rounded hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700'
+          aria-label='Fetch a Random Meal'
         >
           Surprise Me!
         </button>

@@ -1,0 +1,13 @@
+export const SET_SEARCH_TERM = 'SET_SEARCH_TERM';
+export const SET_SEARCH_TYPE = 'SET_SEARCH_TYPE';
+export const SET_SELECTED_MEAL_ID = 'SET_SELECTED_MEAL_ID';
+export const SET_CATEGORY = 'SET_CATEGORY';
+export const SET_AREA = 'SET_AREA';
+export const RESET_STATE = 'RESET_STATE';
+export const DARK_MODE = 'darkMode';
+export const DARK = 'dark';
+export const LOADING = 'Loading...';
+export const ERROR_FETCHING = 'Error fetching meal details';
+export const NO_MEAL_FOUND = 'No meal found';
+export const REMOVE_FAVORITE = 'Remove from Favorites';
+export const ADD_FAVORITE = 'Add to Favorites';
